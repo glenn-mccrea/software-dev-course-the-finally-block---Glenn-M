@@ -11,7 +11,7 @@ This activity will help students:
 
 ---
 📘 Scenario:
-You’ve been hired to create a system that simulates file processing for a virtual library.
+You've been hired to create a system that simulates file processing for a virtual library.
 
 The system must:
 - Validate user input (file names and data)
@@ -45,20 +45,28 @@ Step 4: Test Your Solution
 function processFile(fileName, fileData) {
   try {
     // TODO: Add input validation here
-    
+    if (!fileName) {
+      throw new Error("Missing file name.");
+    }
+    if (typeof fileData !== "string") {
+      throw new Error("File data must be a string.");
+    }
+    if (fileData === "") {
+      throw new Error("Error: File data cannot be empty.");
+    }
     // TODO: Implement simulated file processing here
     console.log(`Processing file: ${fileName}`);
     console.log(`File content: ${fileData}`);
-    
     // TODO: Add simulated file operations (reading/writing)
-    
   } catch (err) {
     // TODO: Implement error handling
     console.error(err);
-  }
-  // TODO: Implement a finally block to close resources
-}
 
+    // TODO: Implement a finally block to close resources
+  } finally {
+    console.log("releasing resources.");
+  }
+}
 // ============================================
 // 🧪 Test Cases Below
 // ============================================
@@ -67,3 +75,6 @@ processFile(); // ❌ ReferenceError: File name is missing
 processFile("myFile.txt", 42); // ❌ TypeError: File data must be a string
 processFile("myFile.txt", ""); // ❌ Error: File data cannot be empty
 processFile("myFile.txt", "Hello, world!"); // ✅ Should process successfully
+processFile("myFile.txt", undefined);
+processFile("myFile.txt", null);
+processFile(undefined, undefined);
